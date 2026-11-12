@@ -6,6 +6,8 @@ launcher, rounded translucent windows, and the Sequoia theme.
 
 ![Sequoia dark](screenshots/dark.png)
 
+![Sequoia light](screenshots/light.png)
+
 ## Install
 
 ```bash
