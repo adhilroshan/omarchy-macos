@@ -1491,10 +1491,15 @@ Item {
             id: clearButton
             width: 18
             height: 18
-            visible: root.filterText.length > 0
+            visible: opacity > 0
+            opacity: root.filterText.length > 0 ? 1 : 0
             anchors.right: parent.right
             anchors.rightMargin: Style.space(16)
             anchors.verticalCenter: parent.verticalCenter
+
+            Behavior on opacity {
+              NumberAnimation { duration: 120; easing.type: Easing.OutCubic }
+            }
 
             Rectangle {
               anchors.fill: parent
@@ -1845,15 +1850,19 @@ Item {
           Text {
             anchors.centerIn: parent
             textFormat: Text.PlainText
-            visible: displayModel.count === 0 && root.mode !== "input"
+            visible: opacity > 0
             text: root.filterText ? Commons.I18n.t("common.noMatchesFor").arg(root.filterText) : Commons.I18n.t("menu.nothingHere")
             color: root.foreground
-            opacity: 0.45
+            opacity: (displayModel.count === 0 && root.mode !== "input") ? 0.45 : 0
             font.family: root.fontFamily
             font.pixelSize: Style.font.body
             horizontalAlignment: Text.AlignHCenter
             elide: Text.ElideRight
             width: parent.width - Style.space(32)
+
+            Behavior on opacity {
+              NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+            }
           }
         }
 
