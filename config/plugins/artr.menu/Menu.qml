@@ -1342,6 +1342,9 @@ Item {
       Behavior on entranceOffset {
         NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
       }
+      Behavior on height {
+        NumberAnimation { duration: 160; easing.type: Easing.OutCubic }
+      }
 
       MouseArea { anchors.fill: parent; onClicked: {} }
 
