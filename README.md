@@ -4,6 +4,8 @@ Everything that turns an [Omarchy](https://omarchy.org/) desktop into a macOS
 one: SF Pro-style typography, a frosted glass menu bar, a Spotlight-style
 launcher, rounded translucent windows, and the Sequoia theme.
 
+![Sequoia dark](screenshots/dark.png)
+
 ## Install
 
 ```bash
