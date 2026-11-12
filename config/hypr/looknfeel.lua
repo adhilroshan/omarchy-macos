@@ -91,10 +91,10 @@ hl.config({
 })
 
 -- Window transitions: open with subtle pop, close with fade, move smoothly
-hl.animation({ leaf = "windows", enabled = true, speed = 4, bezier = "macEaseOut", style = "popin 96%" })
-hl.animation({ leaf = "windowsIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "popin 96%" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "popin 96%" })
-hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, bezier = "macEaseInOut" })
+hl.animation({ leaf = "windows", enabled = true, speed = 4.5, bezier = "macEaseOut", style = "popin 96%" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 4.5, bezier = "macEaseOut", style = "popin 96%" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 3.5, bezier = "macEaseIn", style = "popin 96%" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 4.5, bezier = "macEaseInOut" })
 
 -- Fade transitions (general UI fades)
 hl.animation({ leaf = "fade", enabled = true, speed = 4, bezier = "macEaseOut" })
@@ -104,7 +104,12 @@ hl.animation({ leaf = "fadeOut", enabled = true, speed = 3, bezier = "macEaseIn"
 -- Layer transitions (menus, popups, Spotlight overlay)
 hl.animation({ leaf = "layers", enabled = true, speed = 4, bezier = "macEaseOut", style = "fade" })
 hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "fade" })
-hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "fade" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 3.5, bezier = "macEaseIn", style = "fade" })
+
+-- Special workspace (scratchpad-like overlays)
+hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 4, bezier = "macEaseOut", style = "slide" })
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "slide top" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "slide bottom" })
 
 -- Workspace slide animation.
 --
@@ -118,9 +123,9 @@ hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "macEaseI
 --
 -- This also gives ordinary workspace switches a slide, which is Hyprland's
 -- default look. Remove these three lines to go back to the instant switch.
-hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "macEaseOut", style = "slide" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 5, bezier = "macEaseOut", style = "slide" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4, bezier = "macEaseIn", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 5.5, bezier = "macEaseOut", style = "slide" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 5.5, bezier = "macEaseOut", style = "slide" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4.5, bezier = "macEaseIn", style = "slide" })
 
 -- Border color transition
 hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "macEaseOut" })
