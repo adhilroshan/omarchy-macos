@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #
 # The macOS look for Omarchy: SF Pro-style typography, a frosted glass menu
-# bar, a Spotlight-style launcher, rounded translucent windows, and the
-# Sequoia theme.
+# bar, a Spotlight-style launcher, macOS-styled OSD, trackpad gestures,
+# rounded translucent windows, and the Sequoia theme.
 #
 # Everything it touches is backed up first, so the change is easy to undo.
 
@@ -58,7 +58,7 @@ note "the shell renders in Inter; terminals keep their own monospace font"
 
 say "Shell plugins"
 mkdir -p "$HOME/.config/omarchy/plugins"
-for plugin in artr.menu artr.workspaces; do
+for plugin in artr.menu artr.workspaces artr.osd; do
   if [[ -d "$HOME/.config/omarchy/plugins/$plugin" ]]; then
     cp -r "$HOME/.config/omarchy/plugins/$plugin" "$HOME/.config/omarchy/plugins/.${plugin}.bak.${STAMP}"
     note "backed up plugins/$plugin"
@@ -66,13 +66,23 @@ for plugin in artr.menu artr.workspaces; do
   rm -rf "$HOME/.config/omarchy/plugins/$plugin"
   cp -r "$REPO_DIR/config/plugins/$plugin" "$HOME/.config/omarchy/plugins/$plugin"
 done
-note "Spotlight-style launcher and the dot-style workspace strip"
+note "Spotlight-style launcher, dot-style workspace strip, and macOS-styled OSD"
 
 say "Hyprland look and feel"
 mkdir -p "$HOME/.config/hypr"
 backup "$HOME/.config/hypr/looknfeel.lua"
 cp "$REPO_DIR/config/hypr/looknfeel.lua" "$HOME/.config/hypr/looknfeel.lua"
-note "rounded corners, hairline borders, translucent windows, blur"
+backup "$HOME/.config/hypr/input.lua"
+cp "$REPO_DIR/config/hypr/input.lua" "$HOME/.config/hypr/input.lua"
+note "rounded corners, hairline borders, translucent windows, blur, macOS-like animations"
+note "trackpad gestures and input tuning (natural scroll, 3/4-finger gestures)"
+
+say "Touchpad helper"
+mkdir -p "$HOME/.local/bin"
+backup "$HOME/.local/bin/touchpad-volume"
+cp "$REPO_DIR/bin/touchpad-volume" "$HOME/.local/bin/touchpad-volume"
+chmod +x "$HOME/.local/bin/touchpad-volume"
+note "installed ~/.local/bin/touchpad-volume for 4-finger volume gesture"
 
 say "Hyprland glass toggles"
 TOGGLES_DIR="$HOME/.local/state/omarchy/toggles/hypr"
@@ -101,10 +111,11 @@ if [[ -f "$SHELL_JSON" ]]; then
     | .bar.layout.right = (($right | map(select(.id != "omarchy.clock"))) + (if $clock then [$clock] else [] end))
     | .bar.layout.left = (($left | map(select(.id != "artr.workspaces"))) + (if $workspaces then [$workspaces] else [] end))
     | .bar.layout.centerEnd = ($centerEnd | map(select(.id != "artr.workspaces")))
-    | .disabledPlugins = (((.disabledPlugins // []) + ["omarchy.menu", "omarchy.dock", "omarchy.workspaces"]) | unique)
-    | .cloneSourceRestores = (((.cloneSourceRestores // []) + ["artr.menu", "artr.workspaces"]) | unique)
+    | .plugins = (((.plugins // []) | map(select(.id != "artr.osd"))) + [{"id":"artr.osd"}])
+    | .disabledPlugins = (((.disabledPlugins // []) + ["omarchy.menu", "omarchy.dock", "omarchy.workspaces", "omarchy.osd"]) | unique)
+    | .cloneSourceRestores = (((.cloneSourceRestores // []) + ["artr.menu", "artr.workspaces", "artr.osd"]) | unique)
   ' "$SHELL_JSON" > "${SHELL_JSON}.new" && mv "${SHELL_JSON}.new" "$SHELL_JSON"
-  note "glassy menu bar with the clock on the right, dock hidden"
+  note "glassy menu bar, clock on the right, dock hidden, custom OSD enabled"
 else
   echo "    shell.json not found; skipped" >&2
 fi

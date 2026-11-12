@@ -1,0 +1,52 @@
+#!/bin/bash
+# Move the output volume by a signed percentage, optionally showing the OSD.
+#
+# Used by the four-finger volume gesture in ~/.config/hypr/input.lua, which
+# hands over the volume change it wants as a delta rather than a target, so
+# this resolves the real output and applies the delta on top of whatever the
+# volume happens to be right now.
+#
+# usage: touchpad-volume <delta-percent> [--show]
+
+set -uo pipefail
+
+delta="${1:-0}"
+show="${2:-}"
+
+[[ "$delta" =~ ^-?[0-9]+$ ]] || exit 0
+
+sink_cache="${XDG_RUNTIME_DIR:-/tmp}/touchpad-volume.sink"
+
+# The default output can sit behind a DSP sink (speaker tuning, EasyEffects).
+# Ask Omarchy which sink actually carries the loudness, and remember it so
+# the common case is a single pactl call.
+sink=""
+[[ -r "$sink_cache" ]] && sink="$(cat "$sink_cache" 2>/dev/null)"
+
+if [[ -z "$sink" ]] || ! pactl get-sink-volume "$sink" >/dev/null 2>&1; then
+  sink="$(omarchy-audio-output-sink 2>/dev/null)"
+  [[ -n "$sink" ]] || exit 0
+  printf '%s' "$sink" >"$sink_cache"
+fi
+
+# pactl prints the percentage in the display language; parse it in the C locale.
+current="$(LC_ALL=C pactl get-sink-volume "$sink" 2>/dev/null |
+  awk 'NR == 1 {
+    for (i = 1; i <= NF; i++)
+      if ($i ~ /%$/) { sub("%", "", $i); print $i; exit }
+  }')"
+
+[[ -n "$current" ]] || exit 0
+
+next=$((current + delta))
+((next > 100)) && next=100
+((next < 0)) && next=0
+
+pactl set-sink-mute "$sink" 0
+pactl set-sink-volume "$sink" "${next}%" 2>/dev/null
+
+if [[ "$show" == "--show" ]]; then
+  icon="volume-high"
+  ((next == 0)) && icon="volume-muted"
+  omarchy-osd -i "$icon" -p "$next"
+fi
