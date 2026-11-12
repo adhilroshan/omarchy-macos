@@ -1658,6 +1658,13 @@ Item {
               color: row.hasCursor ? root.selectedBackground : "transparent"
               borderSpec: row.hasCursor ? root.selectedBorderSpec : Border.none()
 
+              Behavior on color {
+                ColorAnimation { duration: 120; easing.type: Easing.OutCubic }
+              }
+              Behavior on opacity {
+                NumberAnimation { duration: 120; easing.type: Easing.OutCubic }
+              }
+
               Rectangle {
                 visible: false
                 width: Style.space(4)
@@ -1721,6 +1728,10 @@ Item {
                   font.pixelSize: Style.font.heading
                   font.weight: Font.Medium
                   elide: Text.ElideRight
+
+                  Behavior on color {
+                    ColorAnimation { duration: 120; easing.type: Easing.OutCubic }
+                  }
                 }
 
                 Text {
