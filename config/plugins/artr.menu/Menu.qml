@@ -1304,6 +1304,10 @@ Item {
     Rectangle {
       anchors.fill: parent
       color: root.scrim
+      opacity: panel.shown ? 1 : 0
+      Behavior on opacity {
+        NumberAnimation { duration: 150; easing.type: Easing.OutCubic }
+      }
     }
 
     MouseArea {
@@ -1317,13 +1321,27 @@ Item {
       height: Math.min(root.cardHeight, panel.height - Style.gapsOut - panel.effectiveCardTop)
       radius: root.cornerRadius
       anchors.horizontalCenter: parent.horizontalCenter
-      y: panel.effectiveCardTop
+      property real entranceOffset: panel.shown ? 0 : -12
+      y: panel.effectiveCardTop + entranceOffset
       // The card is only a container now: the field and the results below it
       // are the two panels that stand on their own, the way Spotlight draws
       // them.
       color: "transparent"
       borderSpec: Border.none()
       padding: root.contentMargin
+      opacity: panel.shown ? 1 : 0
+      scale: panel.shown ? 1 : 0.985
+      transformOrigin: Item.Top
+
+      Behavior on opacity {
+        NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+      }
+      Behavior on scale {
+        NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+      }
+      Behavior on entranceOffset {
+        NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+      }
 
       MouseArea { anchors.fill: parent; onClicked: {} }
 

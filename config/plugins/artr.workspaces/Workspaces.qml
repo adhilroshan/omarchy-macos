@@ -282,6 +282,13 @@ BarWidget {
         verticalPadding: 2
         fixedWidth: root.vertical ? root.barSize : Style.space(13)
         fixedHeight: root.barSize
+
+        Behavior on fontSize {
+          NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+        }
+        Behavior on foreground {
+          ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
+        }
         onPressed: function() {
           if (shown) root.cycleLayout()
           else root.focusWorkspace(modelData)

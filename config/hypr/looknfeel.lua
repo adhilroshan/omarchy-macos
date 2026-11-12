@@ -72,6 +72,59 @@ hl.config({
   },
 })
 
+-- macOS-like view transitions.
+-- Smooth, purposeful motion: windows fade/scale in, layers (menus, Spotlight)
+-- appear with a gentle fade, and workspace slides feel continuous.
+-- Curves tuned to feel like macOS: quick ease-out for entrances, ease-in-out
+-- for moves, and a soft deceleration on exits.
+
+-- Custom bezier curves matching macOS feel (ease-out, ease-in-out, ease-in)
+hl.curve("macEaseOut", { type = "bezier", points = { { 0.16, 1.0 }, { 0.3, 1.0 } } })
+hl.curve("macEaseInOut", { type = "bezier", points = { { 0.42, 0.0 }, { 0.58, 1.0 } } })
+hl.curve("macEaseIn", { type = "bezier", points = { { 0.4, 0.0 }, { 1.0, 1.0 } } })
+
+-- Global animation toggle (keep enabled)
+hl.config({
+  animations = {
+    enabled = true,
+  },
+})
+
+-- Window transitions: open with subtle pop, close with fade, move smoothly
+hl.animation({ leaf = "windows", enabled = true, speed = 4, bezier = "macEaseOut", style = "popin 96%" })
+hl.animation({ leaf = "windowsIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "popin 96%" })
+hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "popin 96%" })
+hl.animation({ leaf = "windowsMove", enabled = true, speed = 4, bezier = "macEaseInOut" })
+
+-- Fade transitions (general UI fades)
+hl.animation({ leaf = "fade", enabled = true, speed = 4, bezier = "macEaseOut" })
+hl.animation({ leaf = "fadeIn", enabled = true, speed = 4, bezier = "macEaseOut" })
+hl.animation({ leaf = "fadeOut", enabled = true, speed = 3, bezier = "macEaseIn" })
+
+-- Layer transitions (menus, popups, Spotlight overlay)
+hl.animation({ leaf = "layers", enabled = true, speed = 4, bezier = "macEaseOut", style = "fade" })
+hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "fade" })
+hl.animation({ leaf = "layersOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "fade" })
+
+-- Workspace slide animation.
+--
+-- Omarchy ships with the workspace animation leaf turned off, and the leaf
+-- that drives a workspace's slide offset inherits from it, so that offset
+-- never animates. A three-finger swipe previews the next workspace by
+-- moving that offset with your finger -- but on release the new workspace
+-- snaps into place instead of sliding home, which is what makes the swipe
+-- feel like it jerks. Turning the leaf back on lets the preview finish as
+-- the slide it was, so the gesture ends the way it started.
+--
+-- This also gives ordinary workspace switches a slide, which is Hyprland's
+-- default look. Remove these three lines to go back to the instant switch.
+hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "macEaseOut", style = "slide" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 5, bezier = "macEaseOut", style = "slide" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4, bezier = "macEaseIn", style = "slide" })
+
+-- Border color transition
+hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "macEaseOut" })
+
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#animations
 -- hl.config({
 --   animations = {
