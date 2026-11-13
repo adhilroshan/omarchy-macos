@@ -270,24 +270,42 @@ BarWidget {
         Layout.topMargin: firstGuest && root.vertical ? Style.space(6) : 0
 
         bar: root.bar
-        // One dot per workspace, the way the Dock marks what is running:
-        // empty ones fade back, the active one carries the accent colour.
-        text: "•"
-        fontSize: shown ? Style.space(14) : Style.space(11)
-        foreground: shown ? Color.accent : Util.alpha(Color.bar.text, occupied ? 0.42 : 0.18)
+        // Refined numbers: the active workspace gets the accent colour and a
+        // hairline underline, the way a macOS menu bar marks the selection;
+        // empty workspaces fade back, occupied ones stay legible.
+        text: slot === root.slots ? "0" : String(slot)
+        fontSize: Style.space(11)
+        foreground: shown ? Color.accent : Util.alpha(Color.bar.text, occupied ? 0.55 : 0.30)
         useActiveColor: false
         opacity: 1
         tooltipText: "Workspace " + slot + (shown ? " — " + root.activeMode + " (click to cycle)" : "")
-        horizontalMargin: 2
+        horizontalMargin: 3
         verticalPadding: 2
-        fixedWidth: root.vertical ? root.barSize : Style.space(13)
+        fixedWidth: root.vertical ? root.barSize : Style.space(16)
         fixedHeight: root.barSize
 
-        Behavior on fontSize {
-          NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-        }
         Behavior on foreground {
           ColorAnimation { duration: 180; easing.type: Easing.OutCubic }
+        }
+
+        // Subtle underline for the active workspace (macOS menu-bar style).
+        Rectangle {
+          id: underline
+          anchors.bottom: parent.bottom
+          anchors.bottomMargin: 1
+          anchors.horizontalCenter: parent.horizontalCenter
+          width: shown ? Style.space(8) : 0
+          height: 1.5
+          radius: 0.75
+          color: Color.accent
+          opacity: shown ? 1 : 0
+
+          Behavior on width {
+            NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+          }
+          Behavior on opacity {
+            NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+          }
         }
         onPressed: function() {
           if (shown) root.cycleLayout()
