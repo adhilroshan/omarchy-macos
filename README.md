@@ -30,14 +30,14 @@ Use `./install.sh --no-theme` to skip installing the themes.
 
 | | |
 |---|---|
-| **Typography** | The shell (menu bar, menus, dock) renders in **Inter**, the closest free stand-in for SF Pro. Terminals keep their own monospace font. |
+| **Typography** | The shell (menu bar, menus, dock) and system UI (GTK interface/document fonts) render in **Inter**, the closest free stand-in for SF Pro. Terminals keep their own monospace font. |
 | **Menu bar** | Glassy: Hyprland blurs the wallpaper behind it, and the clock moves to the far right like macOS. |
 | **Launcher** | `Super+Space` opens a Spotlight-style search field — wide, near the top of the screen, with a magnifier, a clear button, results in a separate panel, and smooth open/filter transitions. |
 | **Windows** | Rounded corners, a 1px hairline border, a soft drop shadow, and slight translucency so the wallpaper shows through. |
 | **View transitions** | macOS-like easing for window open/close/move, layer/menu fades, workspace slides, and special workspaces (via Hyprland animations). |
 | **OSD** | Custom compact, glass-styled on-screen display (`artr.osd`) for volume/brightness/status, replacing the stock OSD. |
 | **Trackpad & gestures** | Natural scrolling (mouse + touchpad), tuned workspace swipe feel, 3-finger gestures (workspace/fullscreen/float), and 4-finger vertical volume gesture with continuous tracking. |
-| **Lock screen** | Sequoia-themed unlock/lock screen images (`unlock.png`, `preview-unlock.png`) are included in the [Sequoia](https://github.com/adhilroshan/omarchy-sequoia) and [Sequoia Light](https://github.com/adhilroshan/omarchy-sequoia-light) themes. |
+| **Lock screen** | Sequoia-themed unlock/lock screen images (`unlock.png`, `preview-unlock.png`) are included in the [Sequoia](https://github.com/adhilroshan/omarchy-sequoia) and [Sequoia Light](https://github.com/adhilroshan/omarchy-sequoia-light) themes (apply/update the theme to pick them up). |
 | **Login & boot screens** | Optional macOS Sequoia-styled SDDM login theme and Plymouth boot colors/assets, applied via `bin/apply-login-screens` (requires sudo). |
 | **Surfaces** | Menus, notifications and popups use a frosted material with light catching the top edge. |
 | **Workspaces** | The workspace strip in the menu bar is a row of dots (active/occupied/empty states) instead of numbers. |

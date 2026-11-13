@@ -56,6 +56,15 @@ cp "$REPO_DIR/config/fontconfig/conf.d/99-omarchy-inter-ui.conf" "$HOME/.config/
 fc-cache -f >/dev/null 2>&1 || true
 note "the shell renders in Inter; terminals keep their own monospace font"
 
+say "System UI fonts"
+if command -v gsettings >/dev/null 2>&1; then
+  gsettings set org.gnome.desktop.interface font-name 'Inter 11' >/dev/null 2>&1 || true
+  gsettings set org.gnome.desktop.interface document-font-name 'Inter 11' >/dev/null 2>&1 || true
+  note "GTK interface and document fonts set to Inter 11"
+else
+  note "gsettings not found; skipped GTK font settings"
+fi
+
 say "Shell plugins"
 mkdir -p "$HOME/.config/omarchy/plugins"
 for plugin in artr.menu artr.workspaces artr.osd; do
