@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+# Apply macOS Sequoia styling to initial/login screens (Plymouth boot + SDDM).
+# Requires sudo for system theme installation.
+#
+# Usage:
+#   ./bin/apply-login-screens [dark|light]
+
+set -euo pipefail
+
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+MODE="${1:-dark}"
+
+case "$MODE" in
+  dark)
+    BG="#1E1E1E"
+    FG="#EBEBF5"
+    ;;
+  light)
+    BG="#F5F5F7"
+    FG="#1D1D1F"
+    ;;
+  *)
+    echo "Usage: $0 [dark|light]" >&2
+    exit 1
+    ;;
+esac
+
+echo "==> Plymouth boot screen ($MODE)"
+if command -v omarchy-plymouth-set >/dev/null 2>&1; then
+  omarchy-plymouth-set "$BG" "$FG" "$REPO_DIR/config/plymouth/logo.png" || echo "    Plymouth apply failed (sudo may be required or unavailable)"
+else
+  echo "    omarchy-plymouth-set not found; skipped"
+fi
+
+echo "==> SDDM login screen (Sequoia theme)"
+SDDM_SRC="$REPO_DIR/config/sddm/sequoia"
+SDDM_DST="/usr/share/sddm/themes/sequoia"
+if [[ -d "$SDDM_SRC" ]]; then
+  echo "    Installing SDDM theme to $SDDM_DST (requires sudo)..."
+  sudo mkdir -p "$SDDM_DST"
+  sudo cp -r "$SDDM_SRC/." "$SDDM_DST/"
+  echo "    Installed. To activate: set [Theme] Current=sequoia in /etc/sddm.conf.d/ (e.g. /etc/sddm.conf.d/10-theme.conf) and restart SDDM or reboot."
+else
+  echo "    SDDM theme source not found; skipped"
+fi

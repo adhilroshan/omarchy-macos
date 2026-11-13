@@ -37,6 +37,8 @@ Use `./install.sh --no-theme` to skip installing the themes.
 | **View transitions** | macOS-like easing for window open/close/move, layer/menu fades, workspace slides, and special workspaces (via Hyprland animations). |
 | **OSD** | Custom compact, glass-styled on-screen display (`artr.osd`) for volume/brightness/status, replacing the stock OSD. |
 | **Trackpad & gestures** | Natural scrolling (mouse + touchpad), tuned workspace swipe feel, 3-finger gestures (workspace/fullscreen/float), and 4-finger vertical volume gesture with continuous tracking. |
+| **Lock screen** | Sequoia-themed unlock/lock screen images (`unlock.png`, `preview-unlock.png`) are included in the [Sequoia](https://github.com/adhilroshan/omarchy-sequoia) and [Sequoia Light](https://github.com/adhilroshan/omarchy-sequoia-light) themes. |
+| **Login & boot screens** | Optional macOS Sequoia-styled SDDM login theme and Plymouth boot colors/assets, applied via `bin/apply-login-screens` (requires sudo). |
 | **Surfaces** | Menus, notifications and popups use a frosted material with light catching the top edge. |
 | **Workspaces** | The workspace strip in the menu bar is a row of dots (active/occupied/empty states) instead of numbers. |
 | **Dock** | Hidden, for a cleaner macOS-like desktop. |
@@ -46,8 +48,8 @@ Use `./install.sh --no-theme` to skip installing the themes.
 - [Sequoia](https://github.com/adhilroshan/omarchy-sequoia) — dark
 - [Sequoia Light](https://github.com/adhilroshan/omarchy-sequoia-light) — light
 
-Both carry Apple's macOS Sequoia system palette, the default blue accent, and
-the authentic macOS Sequoia wallpapers.
+Both carry Apple's macOS Sequoia system palette, the default blue accent, the
+authentic macOS Sequoia wallpapers, and lock screen unlock images.
 
 ## Files it writes
 
@@ -65,6 +67,20 @@ the authentic macOS Sequoia wallpapers.
 ~/.config/omarchy/shell.json                 bar layout, plugin enable/disable wiring
 ~/.local/state/omarchy/toggles/hypr/         bar-glassy.lua, window-glassy.lua
 ```
+
+This repo also ships optional initial-screen assets/helpers:
+- `config/sddm/sequoia/` — Sequoia-styled SDDM login theme
+- `config/plymouth/logo.png` — logo used for Plymouth theming
+- `bin/apply-login-screens` — applies Plymouth + installs SDDM theme (sudo required)
+
+To apply login/boot screen styling:
+
+```bash
+./bin/apply-login-screens dark   # or: light
+```
+
+> Note: installing/activating SDDM and Plymouth themes is system-level and may
+> require sudo, SDDM config changes, and a reboot/restart of the display manager.
 
 Each file that already exists is copied to `<file>.bak.<timestamp>` first.
 Plugin directories that already exist are backed up as
