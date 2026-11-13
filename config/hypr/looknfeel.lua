@@ -1,4 +1,12 @@
 -- Change the default Omarchy look'n'feel.
+-- macOS Sequoia-inspired: rounded corners, hairline borders, translucent
+-- windows with Liquid Glass blur, soft shadows, and macOS-like motion.
+
+-- Accessibility (Apple HIG): reduced motion and reduced transparency are
+-- handled by the shell (Quickshell) and compositor settings. To disable
+-- animations entirely, set animations.enabled = false below.
+-- To make surfaces more opaque (reduced transparency), increase
+-- active_opacity/inactive_opacity and disable blur.
 
 -- Opt another application in to Omarchy's standard transparency.
 -- Find its class with: hyprctl clients
@@ -60,15 +68,15 @@ hl.config({
 
     blur = {
       enabled = true,
-      size = 4,
-      passes = 2,
+      size = 5,
+      passes = 3,
       new_optimizations = true,
       xray = false,
-      contrast = 1.0,
-      brightness = 0.75,
-      noise = 0.01,
-      vibrancy = 0.35,
-      vibrancy_darkness = 0.35,
+      contrast = 1.1,
+      brightness = 0.8,
+      noise = 0.015,
+      vibrancy = 0.4,
+      vibrancy_darkness = 0.4,
       popups = true,
       special = true,
     },
