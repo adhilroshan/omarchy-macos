@@ -105,11 +105,24 @@ if [[ -f "$SHELL_JSON" ]]; then
     | (.bar.layout.centerEnd // []) as $centerEnd
     | (.bar.layout.right // []) as $right
     | ([($left[]), ($centerBegin[]), ($center[]), ($centerEnd[]), ($right[])] | map(select(.id == "omarchy.clock")) | first) as $clock
-    | ([($left[]), ($centerBegin[]), ($center[]), ($centerEnd[]), ($right[])] | map(select(.id == "artr.workspaces")) | first) as $workspaces
+    | ([($left[]), ($centerBegin[]), ($center[]), ($centerEnd[]), ($right[])] | map(select(.id == "artr.workspaces")) | first // {"id":"artr.workspaces"}) as $workspaces
     | .bar.background = "glassy"
     | .bar.layout.center = []
     | .bar.layout.right = (($right | map(select(.id != "omarchy.clock"))) + (if $clock then [$clock] else [] end))
-    | .bar.layout.left = (($left | map(select(.id != "artr.workspaces"))) + (if $workspaces then [$workspaces] else [] end))
+    | .bar.layout.left = (
+        (
+          if (any($left[]; .id == "artr.menu")) then $left
+          elif (any($left[]; .id == "omarchy.menu")) then ($left | map(if .id == "omarchy.menu" then {"id":"artr.menu"} else . end))
+          else ([{"id":"artr.menu"}] + $left)
+          end
+        )
+        | map(select(.id != "artr.workspaces"))
+        | . as $l
+        | (if (any($l[]; .id == "artr.menu")) then
+            ($l | to_entries | map(if .value.id == "artr.menu" then .key else empty end) | .[0]) as $idx
+            | ($l[0:$idx+1] + [$workspaces] + $l[$idx+1:])
+          else [$workspaces] + $l end)
+      )
     | .bar.layout.centerEnd = ($centerEnd | map(select(.id != "artr.workspaces")))
     | .plugins = (((.plugins // []) | map(select(.id != "artr.osd"))) + [{"id":"artr.osd"}])
     | .disabledPlugins = (((.disabledPlugins // []) + ["omarchy.menu", "omarchy.dock", "omarchy.workspaces", "omarchy.osd"]) | unique)
