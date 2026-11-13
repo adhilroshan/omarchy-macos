@@ -26,7 +26,7 @@
 --
 --     -- Dim unfocused windows (0.0 = no dim, 1.0 = fully dimmed).
 --     dim_inactive = true,
---     dim_strength = 0.15,
+--     dim_strength = 0.08,
 --   },
 -- })
 
@@ -47,12 +47,15 @@ hl.config({
     active_opacity = 0.95,
     inactive_opacity = 0.90,
 
+    dim_inactive = true,
+    dim_strength = 0.08,
+
     shadow = {
       enabled = true,
-      range = 10,
-      render_power = 3,
-      color = "rgba(00000070)",
-      color_inactive = "rgba(00000035)",
+      range = 14,
+      render_power = 2,
+      color = "rgba(00000060)",
+      color_inactive = "rgba(00000025)",
     },
 
     blur = {
