@@ -118,9 +118,9 @@ hl.animation({ leaf = "layersIn", enabled = true, speed = 4, bezier = "macEaseOu
 hl.animation({ leaf = "layersOut", enabled = true, speed = 3.5, bezier = "macEaseIn", style = "fade" })
 
 -- Special workspace (scratchpad-like overlays)
-hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 4, bezier = "macEaseOut", style = "slide" })
-hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "slide top" })
-hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "slide bottom" })
+hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 4, bezier = "macEaseOut", style = "slidefade 20%" })
+hl.animation({ leaf = "specialWorkspaceIn", enabled = true, speed = 4, bezier = "macEaseOut", style = "slidefade 20%" })
+hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, bezier = "macEaseIn", style = "slidefade 20%" })
 
 -- Workspace slide animation.
 --
@@ -134,9 +134,11 @@ hl.animation({ leaf = "specialWorkspaceOut", enabled = true, speed = 3, bezier =
 --
 -- This also gives ordinary workspace switches a slide, which is Hyprland's
 -- default look. Remove these three lines to go back to the instant switch.
-hl.animation({ leaf = "workspaces", enabled = true, speed = 5.5, bezier = "macEaseOut", style = "slide" })
-hl.animation({ leaf = "workspacesIn", enabled = true, speed = 5.5, bezier = "macEaseOut", style = "slide" })
-hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4.5, bezier = "macEaseIn", style = "slide" })
+hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "macEaseOut", style = "slidefade 20%" })
+hl.animation({ leaf = "workspacesIn", enabled = true, speed = 5, bezier = "macEaseOut", style = "slidefade 20%" })
+hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4, bezier = "macEaseIn", style = "slidefade 20%" })
+
+hl.animation({ leaf = "fadeDim", enabled = true, speed = 4, bezier = "macEaseOut" })
 
 -- Border color transition
 hl.animation({ leaf = "border", enabled = true, speed = 5, bezier = "macEaseOut" })
