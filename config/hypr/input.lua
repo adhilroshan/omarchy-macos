@@ -26,18 +26,30 @@ hl.config({
 -- swipe halfway through.
 hl.config({
   gestures = {
-    -- Finger travel (px) that maps to a full screen-width slide. Lower is
-    -- more responsive; the preview still tracks your finger 1:1.
-    workspace_swipe_distance = 140,
+    -- Finger travel (px) that maps to a full screen-width slide. Tuned for
+    -- a macOS-like feel: enough travel that the preview tracks 1:1 with the
+    -- finger without committing prematurely, but not so much that it feels
+    -- sluggish. The preview still follows the finger exactly regardless.
+    workspace_swipe_distance = 180,
 
     -- Let go after this fraction of the travel and the switch commits.
-    workspace_swipe_cancel_ratio = 0.35,
+    -- Higher value means you need to swipe further before it sticks,
+    -- giving more control and preventing accidental switches.
+    workspace_swipe_cancel_ratio = 0.40,
 
-    -- A flick this fast commits even if it has not travelled far.
-    workspace_swipe_min_speed_to_force = 12,
+    -- A flick this fast commits even if it has not travelled far. Slightly
+    -- higher threshold so only deliberate flicks commit, not casual drags.
+    workspace_swipe_min_speed_to_force = 15,
 
     -- Decide left/right once this much travel has happened and stick to it.
-    workspace_swipe_direction_lock_threshold = 20,
+    -- Higher threshold prevents wobbly fingers from cancelling a swipe
+    -- halfway through, making the gesture feel more decisive.
+    workspace_swipe_direction_lock_threshold = 25,
+
+    -- Allow continuous swiping across multiple workspaces in one gesture,
+    -- the way macOS Spaces lets you swipe through several desktops without
+    -- lifting your fingers. Makes multi-workspace navigation feel fluid.
+    workspace_swipe_forever = true,
   },
 })
 
